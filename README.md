@@ -1,2 +1,2 @@
-# latex-trials
+### latex-trials
 Personal Latex Tests
