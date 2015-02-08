@@ -1,0 +1,22 @@
+%\directlua{dofile("ludo.lua")}
+%\directlua{create_doc()}
+
+\documentclass{article}
+\usepackage{tikz}
+\begin{document}
+  \newsavebox\mysubpic
+  \sbox{\mysubpic}{%
+    \begin{tikzpicture}[remember picture] %sub-picture
+      \path[draw, fill=blue!30] (0,0) -- (2,2) -- (0,2) -- cycle;
+      \path[draw, fill=green!30] (0,0) -- (2,2) -- (2,0) -- cycle;
+    \end{tikzpicture}% needed, otherwise anchors are wrong!
+  }
+  \begin{tikzpicture}[remember picture]
+    \path[draw] node (a) {before} ++(2,0) node[inner sep=0pt] (subpic) {\usebox{\mysubpic}} ++(\wd\mysubpic,0) node {after};
+       \path[draw] node (a) {before} ++(2,2) node[inner sep=0pt] (subpic) {\usebox{\mysubpic}} ++(\wd\mysubpic,0) node {after};
+
+    \foreach \anch in {south west, north west, south east, north east}{
+      \fill[blue] (subpic.\anch) circle[radius=2pt];
+    }
+  \end{tikzpicture}
+\end{document}
